@@ -40,6 +40,7 @@ module.exports = function(app, dcPath) {
     '-f',
       dcFile,
     'run',
+      '--service-ports',
       app,
         cmd
   ].join(' ');
