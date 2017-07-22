@@ -15,7 +15,7 @@ services:
   jekyll:
     image: jekyll/jekyll
     ports:
-    - 127.0.0.1:4000:4000
+    - "4000:4000"
     volumes:
     - ${PWD}:/srv/jekyll
 ```
