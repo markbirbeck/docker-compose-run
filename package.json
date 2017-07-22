@@ -1,6 +1,6 @@
 {
   "name": "docker-compose-run",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Execute a Docker Compose 'run' command for desktop commands.",
   "keywords": [
     "docker",
