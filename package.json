@@ -6,6 +6,7 @@
     "docker",
     "docker compose"
   ],
+  "license": "MIT",
   "repository": "https://github.com/markbirbeck/docker-compose-run",
   "bugs": "https://github.com/markbirbeck/docker-compose-run/issues",
   "homepage": "https://github.com/markbirbeck/docker-compose-run"
