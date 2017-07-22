@@ -1,0 +1,12 @@
+{
+  "name": "docker-compose-run",
+  "version": "0.1.0",
+  "description": "Execute a Docker Compose 'run' command for desktop commands.",
+  "keywords": [
+    "docker",
+    "docker compose"
+  ],
+  "repository": "https://github.com/markbirbeck/docker-compose-run",
+  "bugs": "https://github.com/markbirbeck/docker-compose-run/issues",
+  "homepage": "https://github.com/markbirbeck/docker-compose-run"
+}

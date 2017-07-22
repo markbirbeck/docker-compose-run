@@ -1,0 +1,11 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "eqeqeq": 2,
+    "no-undef": 2,
+    "no-unused-vars": 2
+  }
+}
