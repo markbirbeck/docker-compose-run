@@ -10,11 +10,12 @@ var spawn = require('child_process').spawn;
 
 /**
  * Execute a Docker Compose 'run' command.
- * @param {string} app name
+ * @param {string} service name
  * @param {string} path to Docker Compose config file
+ * @param {string} app name
  */
 
-module.exports = function(app, dcPath) {
+module.exports = function(service, dcPath, app) {
 
   /**
    * The Docker Compose file to use:
@@ -42,7 +43,7 @@ module.exports = function(app, dcPath) {
     'run',
       '--service-ports',
       '--rm',
-      app,
+      service,
         cmd
   ].join(' ');
 

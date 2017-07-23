@@ -26,7 +26,7 @@ Then create a shell script that uses this module; it could be called anything, b
 #!/usr/bin/env node
 var dcr = require('docker-compose-run');
 
-dcr('jekyll', __dirname));
+dcr('jekyll', __dirname, 'jekyll'));
 ```
 
 Now when we run this script with a Jekyll command, a Docker container will be created and launched, and our command will be passed in to it:
@@ -66,7 +66,10 @@ Subcommands:
 
 The module provides a single function that takes two parameters:
 
-* the name of the application to run, and;
-* the directory in which the `docker-compose.yml` file is located.
+* the name of the service to run, and;
+* the directory in which the `docker-compose.yml` file is located, and;
+* the name of the application to run.
 
-The application name is used in two ways; the first is as a key into the Docker Compose file, and the second is as the name of the command to run _within_ the Docker container.
+The service name must match the key in the Docker Compose file. The application parameter is the name of the command to run _within_ the Docker container.
+
+Note that the application name can be omitted if the Docker image has been set up in such a way that it's not needed. This will be the case if the `ENTRYPOINT` has been set in the `Dockerfile`.
