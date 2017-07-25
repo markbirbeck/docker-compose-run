@@ -3,7 +3,7 @@ docker-compose-run
 
 This module executes Docker Compose 'run' commands using specific Docker Compose configuration files. The idea is to be able to capture the detail of a particular application and how it should be run, in simple, shareable files.
 
-For an explanation of the thinking behind this module see the blog post [Disposable Laptops With Docker Compose And NPM](http://bit.ly/2tBCYHB)
+For an explanation of the thinking behind this module see the blog post [Disposable Laptops With Docker Compose And NPM](http://bit.ly/2tBCYHB).
 
 ## Example
 
