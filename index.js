@@ -36,16 +36,29 @@ module.exports = function(service, dcPath, app) {
   * Build the full command that needs to be spawned:
   */
 
-  var command = [
-    'docker-compose',
-    '-f',
-      dcFile,
-    'run',
-      '--service-ports',
-      '--rm',
-      service,
-        cmd
-  ].join(' ');
+  var command = [];
+
+  command.push('docker-compose');
+
+  /**
+   * Add the Docker Compose file to use:
+   */
+
+  command.push('-f', dcFile);
+
+  /**
+   * Add the instructions to run the service with the default options:
+   */
+
+  command.push('run', '--service-ports', '--rm', service);
+
+  /**
+   * Add the command to pass to the container:
+   */
+
+  command.push(cmd);
+
+  command = command.join(' ');
 
   /**
    * Now spawn the command and send any IO to the right streams:
