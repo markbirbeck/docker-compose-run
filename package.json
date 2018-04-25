@@ -2,6 +2,9 @@
   "name": "docker-compose-run",
   "version": "0.5.1",
   "description": "Execute a Docker Compose 'run' command for desktop commands.",
+  "bin": {
+    "dcr": "./bin/cli.js"
+  },
   "keywords": [
     "docker",
     "docker compose"
