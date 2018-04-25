@@ -66,7 +66,7 @@ Subcommands:
 
 ## API
 
-The module provides a single function that takes two parameters:
+The module provides a single function that takes three parameters:
 
 * the name of the service to run, and;
 * the directory in which the `docker-compose.yml` file is located, and;
