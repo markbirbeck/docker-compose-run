@@ -5,8 +5,19 @@
  * any ES6 features.
  */
 
+var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
+var verbose = false;
+
+function addFileIfExists(fileName, command) {
+  try {
+    fs.accessSync(fileName, fs.constants.R_OK);
+    command.push('-f', fileName);
+  } catch(e) {
+    if (verbose) console.log('No ' + fileName + ' file found');
+  }
+}
 
 /**
  * Execute a Docker Compose 'run' command.
@@ -43,11 +54,32 @@ module.exports = function(service, dcPath, app) {
   command.push('docker-compose');
 
   /**
-   * If there's no Docker Compose file then don't use '-f', which will
-   * mean that Docker Compose will just look in the working directory:
+   * If there's a Docker Compose file specified then add it as a
+   * parameter:
    */
 
   if (dcFile) command.push('-f', dcFile);
+
+  /**
+   * If there is no file specified then Docker Compose will just automatically
+   * pick up 'docker-compose.yml' in the current directory. However, if we
+   * want to add other files like 'docker-compose.dcr.yml' then we'll need to
+   * add the 'docker-compose.yml' file explicitly:
+   */
+
+  else {
+
+    /**
+     * Docker Compose applies these files in the order that they are specified
+     * on the command line, so we put the file with the same name as the environment
+     * last, and that allows us to override everything:
+     */
+
+    addFileIfExists('docker-compose.yml', command);
+    addFileIfExists('docker-compose.dcr.yml', command)
+    addFileIfExists('docker-compose.' + service + '.yml', command);
+    addFileIfExists('docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml', command);
+  }
 
   /**
    * Add the instructions to run the service with the default options:
