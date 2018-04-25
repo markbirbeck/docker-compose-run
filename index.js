@@ -18,10 +18,12 @@ var spawn = require('child_process').spawn;
 module.exports = function(service, dcPath, app) {
 
   /**
-   * The Docker Compose file to use:
+   * The Docker Compose file to use (if specified):
    */
 
-  var dcFile = path.join(dcPath, 'docker-compose.yml');
+  var dcFile = (!dcPath)
+    ? undefined
+    : path.join(dcPath, 'docker-compose.yml');
 
   /**
    * Create the command to run inside the Docker container, which is a
@@ -36,16 +38,30 @@ module.exports = function(service, dcPath, app) {
   * Build the full command that needs to be spawned:
   */
 
-  var command = [
-    'docker-compose',
-    '-f',
-      dcFile,
-    'run',
-      '--service-ports',
-      '--rm',
-      service,
-        cmd
-  ].join(' ');
+  var command = [];
+
+  command.push('docker-compose');
+
+  /**
+   * If there's no Docker Compose file then don't use '-f', which will
+   * mean that Docker Compose will just look in the working directory:
+   */
+
+  if (dcFile) command.push('-f', dcFile);
+
+  /**
+   * Add the instructions to run the service with the default options:
+   */
+
+  command.push('run', '--service-ports', '--rm', service);
+
+  /**
+   * If there is a command to pass to the container then add it:
+   */
+
+  if (cmd) command.push(cmd);
+
+  command = command.join(' ');
 
   /**
    * Now spawn the command and send any IO to the right streams:
