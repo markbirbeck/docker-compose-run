@@ -1,6 +1,6 @@
 {
   "name": "docker-compose-run",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Execute a Docker Compose 'run' command for desktop commands.",
   "bin": {
     "dcr": "./bin/cli.js"
