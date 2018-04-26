@@ -12,6 +12,7 @@ var verbose = false;
 
 function addFileIfExists(fileName, command) {
   try {
+    if (verbose) console.log('About to check for file:', fileName);
     fs.accessSync(fileName, fs.constants.R_OK);
     command.push('-f', fileName);
   } catch(e) {
