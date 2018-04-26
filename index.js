@@ -5,8 +5,22 @@
  * any ES6 features.
  */
 
+var fs = require('fs');
+var os = require('os');
 var path = require('path');
 var spawn = require('child_process').spawn;
+var verbose = false;
+var homedir = os.homedir();
+
+function addFileIfExists(fileName, command) {
+  try {
+    if (verbose) console.log('About to check for file:', fileName);
+    fs.accessSync(fileName, fs.constants.R_OK);
+    command.push('-f', fileName);
+  } catch(e) {
+    if (verbose) console.log('No ' + fileName + ' file found');
+  }
+}
 
 /**
  * Execute a Docker Compose 'run' command.
@@ -43,11 +57,39 @@ module.exports = function(service, dcPath, app) {
   command.push('docker-compose');
 
   /**
-   * If there's no Docker Compose file then don't use '-f', which will
-   * mean that Docker Compose will just look in the working directory:
+   * If there's a Docker Compose file specified then add it as a
+   * parameter:
    */
 
   if (dcFile) command.push('-f', dcFile);
+
+  /**
+   * If there is no file specified then Docker Compose will just automatically
+   * pick up 'docker-compose.yml' in the current directory. However, if we
+   * want to add other files like 'docker-compose.dcr.yml' then we'll need to
+   * add the 'docker-compose.yml' file explicitly:
+   */
+
+  else {
+
+    /**
+     * Docker Compose applies these files in the order that they are specified
+     * on the command line, so we put the file with the same name as the environment
+     * last, and that allows us to override everything:
+     */
+
+    [
+      'docker-compose.yml',
+      'docker-compose.dcr.yml',
+      path.join(homedir, '.docker-compose.dcr.yml'),
+      'docker-compose.' + service + '.yml',
+      path.join(homedir, '.docker-compose.' + service + '.yml'),
+      'docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml',
+      path.join(homedir, '.docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml')
+    ].map(function(fileName) {
+      addFileIfExists(fileName, command);
+    });
+  }
 
   /**
    * Add the instructions to run the service with the default options:

@@ -66,7 +66,7 @@ Subcommands:
 
 ## API
 
-The module provides a single function that takes two parameters:
+The module provides a single function that takes three parameters:
 
 * the name of the service to run, and;
 * the directory in which the `docker-compose.yml` file is located, and;
@@ -75,3 +75,13 @@ The module provides a single function that takes two parameters:
 The service name must match the key in the Docker Compose file. The application parameter is the name of the command to run _within_ the Docker container.
 
 Note that the application name can be omitted if the Docker image has been set up in such a way that it's not needed. This will be the case if the `ENTRYPOINT` has been set in the `Dockerfile`.
+
+## Command-line Parameters
+
+Any additional parameters passed will be appended to the run command. For example, if this command was run:
+
+```shell
+$ ./dcr-jekyll help build
+```
+
+the values `help` and `build` would be passed to the Docker Compose `run` command.
