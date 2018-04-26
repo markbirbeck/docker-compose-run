@@ -75,10 +75,14 @@ module.exports = function(service, dcPath, app) {
      * last, and that allows us to override everything:
      */
 
-    addFileIfExists('docker-compose.yml', command);
-    addFileIfExists('docker-compose.dcr.yml', command)
-    addFileIfExists('docker-compose.' + service + '.yml', command);
-    addFileIfExists('docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml', command);
+    [
+      'docker-compose.yml',
+      'docker-compose.dcr.yml',
+      'docker-compose.' + service + '.yml',
+      'docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml'
+    ].map(function(fileName) {
+      addFileIfExists(fileName, command);
+    });
   }
 
   /**
