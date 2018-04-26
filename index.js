@@ -6,9 +6,11 @@
  */
 
 var fs = require('fs');
+var os = require('os');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var verbose = false;
+var homedir = os.homedir();
 
 function addFileIfExists(fileName, command) {
   try {
@@ -79,8 +81,11 @@ module.exports = function(service, dcPath, app) {
     [
       'docker-compose.yml',
       'docker-compose.dcr.yml',
+      path.join(homedir, '.docker-compose.dcr.yml'),
       'docker-compose.' + service + '.yml',
-      'docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml'
+      path.join(homedir, '.docker-compose.' + service + '.yml'),
+      'docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml',
+      path.join(homedir, '.docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml')
     ].map(function(fileName) {
       addFileIfExists(fileName, command);
     });
