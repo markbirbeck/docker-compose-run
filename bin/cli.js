@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 var dcr = require('docker-compose-run');
+var commandLineArgs = require('command-line-args');
+
+var optionDefinitions = [
+  { name: 'root', defaultValue: process.env.DCR_ROOT },
+  { name: 'service', defaultOption: true }
+];
+var options = commandLineArgs(optionDefinitions);
 
 /**
  * Get the service passed in:
  */
 
-var service = process.argv[2];
+var service = options.service;
 
 /**
  * Modify the command-line arguments to remove the service
@@ -23,4 +30,4 @@ process.argv.splice(2, 1);
  * name:
  */
 
-dcr(service, process.env.DCR_ROOT);
+dcr(service, options.root);

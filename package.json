@@ -5,6 +5,9 @@
   "bin": {
     "dcr": "./bin/cli.js"
   },
+  "dependencies": {
+    "command-line-args": "^5.0.2"
+  },
   "keywords": [
     "docker",
     "docker compose"
