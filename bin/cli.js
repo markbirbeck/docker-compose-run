@@ -18,8 +18,9 @@ var service = process.argv[2];
 process.argv.splice(2, 1);
 
 /**
- * Execute dcr() with the service but no docker-compose.yml path, or
- * app name:
+ * Execute dcr() with the service and whatever docker-compose.yml path is
+ * set in the DCR_ROOT environment variable. Note that there is no app
+ * name:
  */
 
-dcr(service);
+dcr(service, process.env.DCR_ROOT);
