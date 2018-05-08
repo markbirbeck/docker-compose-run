@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 var dcr = require('docker-compose-run');
+var commandLineArgs = require('command-line-args');
+
+var optionDefinitions = [
+  { name: 'root', defaultValue: process.env.DCR_ROOT },
+  { name: 'service', defaultOption: true }
+];
+var options = commandLineArgs(optionDefinitions);
 
 /**
  * Get the service passed in:
  */
 
-var service = process.argv[2];
+var service = options.service;
 
 /**
  * Modify the command-line arguments to remove the service
@@ -18,8 +25,9 @@ var service = process.argv[2];
 process.argv.splice(2, 1);
 
 /**
- * Execute dcr() with the service but no docker-compose.yml path, or
- * app name:
+ * Execute dcr() with the service and whatever docker-compose.yml path is
+ * set in the DCR_ROOT environment variable. Note that there is no app
+ * name:
  */
 
-dcr(service);
+dcr(service, options.root);
