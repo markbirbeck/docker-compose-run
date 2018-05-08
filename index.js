@@ -30,6 +30,7 @@ function addFileIfExists(fileName, command) {
  */
 
 module.exports = function(service, dcPath, app) {
+  var rootdir = dcPath || process.cwd();
 
   /**
    * The Docker Compose file to use (if specified):
@@ -79,12 +80,12 @@ module.exports = function(service, dcPath, app) {
      */
 
     [
-      'docker-compose.yml',
-      'docker-compose.dcr.yml',
+      path.join(rootdir, 'docker-compose.yml'),
+      path.join(rootdir, 'docker-compose.dcr.yml'),
       path.join(homedir, '.docker-compose.dcr.yml'),
-      'docker-compose.' + service + '.yml',
+      path.join(rootdir, 'docker-compose.' + service + '.yml'),
       path.join(homedir, '.docker-compose.' + service + '.yml'),
-      'docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml',
+      path.join(rootdir, 'docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml'),
       path.join(homedir, '.docker-compose.' + process.env.DCR_ENVIRONMENT + '.yml')
     ].map(function(fileName) {
       addFileIfExists(fileName, command);
